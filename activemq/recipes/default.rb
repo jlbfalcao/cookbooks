@@ -17,7 +17,11 @@
 # limitations under the License.
 #
 
-include_recipe "java"
+if node[:activemq][:java] == "sun"
+  include_recipe 'java_sun'
+else
+  include_recipe 'java'
+end
 
 version = node[:activemq][:version]
 mirror = node[:activemq][:mirror]
@@ -33,10 +37,43 @@ unless File.exists?("/opt/apache-activemq-#{version}/bin/activemq")
   end
 end
 
+# add link /opt/apache-activemq
+link "/opt/activemq" do
+  to "/opt/apache-activemq-#{version}"
+end
+
+group "activemq"
+
+user "activemq" do
+  action :create
+  gid "activemq"
+end
+
+execute "chown-activemq-user" do
+  command %Q{
+    chown -R activemq.activemq /opt/apache-activemq-#{version}
+  }
+end
+
 file "/opt/apache-activemq-#{version}/bin/activemq" do
   owner "root"
   group "root"
   mode "0755"
 end
 
-runit_service "activemq"
+remote_file "/etc/init.d/activemq" do
+  source "activemq"
+  owner "root"
+  group "root"
+  mode 0755
+end
+
+if node[:activemq][:init_style] == "runit"
+  runit_service "activemq"
+else
+  # init service
+  service "activemq" do
+    supports :status => true, :restart => true, :reload => true
+    action :nothing
+  end
+end

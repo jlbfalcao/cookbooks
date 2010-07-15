@@ -5,12 +5,12 @@ description      "Installs activemq and sets it up as a runit service"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
 version          "0.3.2"
 
-recipe "activemq", "Installs ActiveMQ from source and sets it up as a runit service" 
+recipe "activemq", "Installs ActiveMQ from source and sets it up as a runit or init service" 
 
 %w{ubuntu debian}.each do |os|
   supports os
 end
 
-%w{java runit}.each do |cb|
+%w{java java_sun runit}.each do |cb|
   depends cb
 end

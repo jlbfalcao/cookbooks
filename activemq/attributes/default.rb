@@ -19,3 +19,7 @@
 
 default[:activemq][:mirror]  = "http://mirrors.ibiblio.org/pub/mirrors"
 default[:activemq][:version] = "5.3.2"
+set_unless[:activemq][:init_style] = "init"
+
+# use sun java version or 'default'
+set_unless[:activemq][:java] = "sun"
