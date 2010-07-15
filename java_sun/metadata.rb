@@ -10,3 +10,7 @@ recipe "java_sun", "Installs Sun Java using preseed to accept terms"
 %w{ debian ubuntu }.each do |os|
   supports os
 end
+
+%w{apt}.each do |cb|
+  depends cb
+end

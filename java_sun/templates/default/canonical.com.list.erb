@@ -1,2 +1,8 @@
-deb http://archive.canonical.com/ubuntu <%= node[:lsb][:codename] %> partner
-deb-src http://archive.canonical.com/ubuntu <%= node[:lsb][:codename] %> partner
+deb http://archive.ubuntu.com/ubuntu/ <%= node[:lsb][:codename] %> multiverse
+deb-src http://archive.ubuntu.com/ubuntu/ <%= node[:lsb][:codename] %> multiverse
+
+deb http://archive.ubuntu.com/ubuntu/ <%= node[:lsb][:codename] %>-updates multiverse
+deb-src http://archive.ubuntu.com/ubuntu/ <%= node[:lsb][:codename] %>-updates multiverse
+
+deb http://security.ubuntu.com/ubuntu <%= node[:lsb][:codename] %>-security multiverse
+deb-src http://security.ubuntu.com/ubuntu <%= node[:lsb][:codename] %>-security multiverse
